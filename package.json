@@ -4,12 +4,14 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^16.0.0",
     "express": "^4.18.1",
+    "mongoose": "^6.3.2",
     "nodemon": "^2.0.16"
   },
   "scripts": {
-    "build": "babel src/server/index.js -d dist",
-    "start": "yarn run build && node dist/index.js"
+    "build": "babel src -w -d dist",
+    "start": "nodemon dist/server/index.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.10",
