@@ -2,12 +2,17 @@ import { createPost, deletePost, getPosts } from "../db/Post.js";
 
 import connectToMongo from "../db/index.js";
 import express from "express";
+import morgan from "morgan";
 
 const port = 3000;
 const app = express();
 
 connectToMongo();
-app.use(express.json());
+// middleware
+app.use(express.json()); // res.json
+app.use(morgan("tiny")); // log requests to console
+
+// resources
 app.get("/", (_, res) => res.json({ message: "Hello world!" }));
 
 app.get("/posts", async (_, res) => {
@@ -33,4 +38,5 @@ app.delete("/post/:postId", async (req, res) => {
   res.json({ message }).status(200);
 });
 
+// Run server and listen for requests
 app.listen(port, () => console.log(`Listening on port ${port}`));
