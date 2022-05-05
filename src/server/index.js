@@ -9,7 +9,7 @@ const app = express();
 
 connectToMongo();
 // middleware
-app.use(express.json()); // res.json
+app.use(express.json()); // normalize responses to JSON
 app.use(morgan("tiny")); // log requests to console
 
 // resources
