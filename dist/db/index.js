@@ -3,10 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.connectionString = exports.Post = void 0;
-exports.createPost = createPost;
-exports.deletePost = deletePost;
-exports.getPosts = getPosts;
+exports.default = exports.connectionString = void 0;
 
 var _dotenv = _interopRequireDefault(require("dotenv"));
 
@@ -19,29 +16,7 @@ _dotenv.default.config();
 const connectionString = process.env.MONGO_CONN_STRING;
 exports.connectionString = connectionString;
 
-const PostSchema = _mongoose.default.Schema({
-  content: {
-    type: String,
-    required: true
-  }
-});
+const connectToMongo = () => _mongoose.default.connect(connectionString);
 
-async function getPosts() {
-  return await Post.find();
-}
-
-async function createPost(content) {
-  const post = await Post.create({
-    content
-  });
-  return post;
-}
-
-async function deletePost(postId) {
-  const post = await Post.findByIdAndDelete(postId);
-  return post;
-}
-
-const Post = _mongoose.default.model("Post", PostSchema);
-
-exports.Post = Post;
+var _default = connectToMongo;
+exports.default = _default;

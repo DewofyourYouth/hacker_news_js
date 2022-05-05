@@ -1,17 +1,12 @@
-import {
-  connectionString,
-  createPost,
-  deletePost,
-  getPosts,
-} from "../db/index.js";
+import { createPost, deletePost, getPosts } from "../db/Post.js";
 
+import connectToMongo from "../db/index.js";
 import express from "express";
-import mongoose from "mongoose";
 
 const port = 3000;
 const app = express();
 
-mongoose.connect(connectionString);
+connectToMongo();
 app.use(express.json());
 app.get("/", (_, res) => res.json({ message: "Hello world!" }));
 
