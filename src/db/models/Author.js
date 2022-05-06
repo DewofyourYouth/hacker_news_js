@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const AuthorSchema = mongoose.Schema({
+export const AuthorSchema = mongoose.Schema({
   firstName: {
     type: String,
     required: true,
@@ -12,8 +12,11 @@ const AuthorSchema = mongoose.Schema({
   emailAddress: {
     type: String,
     required: true,
+    unique: true,
     validate: {
       validator: (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.exec(v),
+      message: (props) =>
+        `emailAddress '${props.value}' is not a valid address.`,
     },
   },
 });
@@ -29,13 +32,19 @@ export async function getAuthor(authorId) {
   return await Author.findById(authorId);
 }
 
-export async function createAuthor(firstName, lastName, email) {
-  return await Author.create(firstName, lastName, email);
+export async function createAuthor(firstName, lastName, emailAddress) {
+  return await Author.create({ firstName, lastName, emailAddress }).catch(
+    (e) => {
+      throw new Error(e);
+    }
+  );
 }
 
 export async function updateAuthor(authorId, update) {
   return await Author.findByIdAndUpdate(authorId, update, { new: true }).catch(
-    (e) => console.log(e)
+    (e) => {
+      throw new Error(e);
+    }
   );
 }
 

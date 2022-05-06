@@ -21,8 +21,16 @@ postRouter.get("/:postId", async (req, res) => {
 });
 
 postRouter.post("/", async (req, res) => {
-  const post = await createPost(req.body.content);
-  res.json(post).status(201);
+  let message, status;
+  try {
+    message = await createPost(req.body.content, req.body?.author);
+    status = 200;
+  } catch (err) {
+    message = { message: err.message };
+    status = 400;
+  } finally {
+    res.json(message).status(status);
+  }
 });
 
 postRouter.delete("/:postId", async (req, res) => {

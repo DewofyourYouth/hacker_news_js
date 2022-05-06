@@ -9,9 +9,17 @@ import express from "express";
 
 const authorRouter = express.Router();
 
-authorRouter("/", async (req, res) => {
+authorRouter.get("/", async (req, res) => {
   const authors = await getAuthors();
   res.json(authors);
+});
+
+authorRouter.post("/", async (req, res) => {
+  const { firstName, lastName, emailAddress } = req.body;
+  const author = await createAuthor(firstName, lastName, emailAddress).catch(
+    (err) => res.json({ error: err.message }).status(400)
+  );
+  res.json(author).status(201);
 });
 
 export default authorRouter;
