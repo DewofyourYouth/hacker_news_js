@@ -30,19 +30,20 @@ export async function getPosts() {
   return await Post.find();
 }
 
+export async function getPost(postId) {
+  return await Post.findById(postId);
+}
+
 export async function createPost(content) {
-  const post = await Post.create({ content });
-  return post;
+  return await Post.create({ content });
 }
 
 export async function updatePost(postId, update) {
-  const updatedPost = await Post.findByIdAndUpdate(postId, update, {
+  return await Post.findByIdAndUpdate(postId, update, {
     new: true,
   }).catch((e) => console.log(e));
-  return updatedPost;
 }
 
 export async function deletePost(postId) {
-  const post = await Post.findByIdAndDelete(postId);
-  return post;
+  return await Post.findByIdAndDelete(postId);
 }
