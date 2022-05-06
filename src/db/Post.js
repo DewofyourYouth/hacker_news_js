@@ -9,8 +9,18 @@ const PostSchema = mongoose.Schema({
     type: Date,
     default: () => Date.now(),
     required: true,
-    mutate: false,
+    immutable: true,
   },
+  dateUpdated: {
+    type: Date,
+    default: () => Date.now(),
+    required: true,
+  },
+});
+
+PostSchema.post("save", function (next) {
+  this.dateUpdated = Date.now();
+  next();
 });
 
 export const Post = mongoose.model("Post", PostSchema);
