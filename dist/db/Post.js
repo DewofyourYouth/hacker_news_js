@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.Post = void 0;
 exports.createPost = createPost;
@@ -10,17 +10,24 @@ exports.getPosts = getPosts;
 
 var _mongoose = _interopRequireDefault(require("mongoose"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 const PostSchema = _mongoose.default.Schema({
   content: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
+  dateCreated: {
+    type: Date,
+    required: false,
+    default: () => Date.now(),
+    mutate: false,
+  },
 });
 
 const Post = _mongoose.default.model("Post", PostSchema); // Helper functions
-
 
 exports.Post = Post;
 
@@ -30,7 +37,7 @@ async function getPosts() {
 
 async function createPost(content) {
   const post = await Post.create({
-    content
+    content,
   });
   return post;
 }

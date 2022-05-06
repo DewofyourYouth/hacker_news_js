@@ -1,4 +1,4 @@
-import { createPost, deletePost, getPosts } from "../db/Post.js";
+import { createPost, deletePost, getPosts, updatePost } from "../db/Post.js";
 
 import connectToMongo from "../db/index.js";
 import express from "express";
@@ -8,12 +8,12 @@ const port = 3000;
 const app = express();
 
 connectToMongo();
-// middleware
+// middlewares
 app.use(express.json()); // normalize responses to JSON
 app.use(morgan("tiny")); // log requests to console
 
 // resources
-app.get("/", (_, res) => res.json({ message: "Hello world!" }));
+app.get("/", (_, res) => res.json({ message: "Hacker News is running" }));
 
 app.get("/posts", async (_, res) => {
   const posts = await getPosts();
@@ -21,8 +21,6 @@ app.get("/posts", async (_, res) => {
 });
 
 app.post("/post", async (req, res) => {
-  const { content } = req.body;
-  console.log(content);
   const post = await createPost(req.body.content);
   res.json(post).status(201);
 });
@@ -36,6 +34,15 @@ app.delete("/post/:postId", async (req, res) => {
     : `No post found with an ID of ${postId}!`;
 
   res.json({ message }).status(200);
+});
+
+app.patch("/post/:postId", async (req, res) => {
+  if (!req.query) throw new Error("Updating a post requires query strings");
+  const { postId } = req.params;
+  const post = await updatePost(postId, req.query);
+  if (!post)
+    res.status(404).json({ message: `Post with ID: ${postId} not found!` });
+  res.json(post);
 });
 
 // Run server and listen for requests
