@@ -25,6 +25,10 @@ export async function getAuthors() {
   return await Author.find();
 }
 
+export async function getAuthor(authorId) {
+  return await Author.findById(authorId);
+}
+
 export async function createAuthor(firstName, lastName, email) {
   return await Author.create(firstName, lastName, email);
 }
