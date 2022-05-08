@@ -2,6 +2,7 @@ import connectToMongo from "../db/index.js";
 import dotenv from "dotenv";
 import express from "express";
 import { getPosts } from "../db/Post.js";
+import morgan from "morgan";
 
 dotenv.config();
 const port = process.env.PORT;
@@ -9,6 +10,9 @@ const app = express();
 
 connectToMongo();
 app.use(express.json());
+app.use(
+  morgan(":method ':url' status=:status response-time=:response-time ms")
+);
 app.get("/", (_, res) => res.json({ message: "Hello world!" }));
 
 app.get("/post", async (_, res) => {

@@ -8,6 +8,8 @@ var _express = _interopRequireDefault(require("express"));
 
 var _Post = require("../db/Post.js");
 
+var _morgan = _interopRequireDefault(require("morgan"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _dotenv.default.config();
@@ -16,6 +18,7 @@ const port = process.env.PORT;
 const app = (0, _express.default)();
 (0, _index.default)();
 app.use(_express.default.json());
+app.use((0, _morgan.default)(":method ':url' status=:status response-time=:response-time ms"));
 app.get("/", (_, res) => res.json({
   message: "Hello world!"
 }));
