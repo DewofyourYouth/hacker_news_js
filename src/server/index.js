@@ -1,8 +1,9 @@
+import authRouter from "./resources/auth";
 import connectToMongo from "../db/index.js";
 import dotenv from "dotenv";
 import express from "express";
-import { getPosts } from "../db/Post.js";
 import morgan from "morgan";
+import postRouter from "./resources/post.js";
 
 dotenv.config();
 const port = process.env.PORT;
@@ -10,14 +11,12 @@ const app = express();
 
 connectToMongo();
 app.use(express.json());
+app.use("/auth", authRouter);
 app.use(
   morgan(":method ':url' status=:status response-time=:response-time ms")
 );
-app.get("/", (_, res) => res.json({ message: "Hello world!" }));
+app.use("/post", postRouter);
 
-app.get("/post", async (_, res) => {
-  const posts = await getPosts();
-  res.json(posts);
-});
+app.get("/", (_, res) => res.json({ message: "Hello world!" }));
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
