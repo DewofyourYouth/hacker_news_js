@@ -13,13 +13,3 @@ export const Post = mongoose.model("Post", PostSchema);
 export async function getPosts() {
   return await Post.find();
 }
-
-export async function createPost(content) {
-  const post = await Post.create({ content });
-  return post;
-}
-
-export async function deletePost(postId) {
-  const post = await Post.findByIdAndDelete(postId);
-  return post;
-}
