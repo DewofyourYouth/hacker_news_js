@@ -11,7 +11,7 @@ connectToMongo();
 app.use(express.json());
 app.get("/", (_, res) => res.json({ message: "Hello world!" }));
 
-app.get("/posts", async (_, res) => {
+app.get("/post", async (_, res) => {
   const posts = await getPosts();
   res.json(posts);
 });

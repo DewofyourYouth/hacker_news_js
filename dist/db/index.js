@@ -16,9 +16,7 @@ _dotenv.default.config();
 const connectionString = process.env.MONGO_CONN_STRING;
 exports.connectionString = connectionString;
 
-const connectToMongo = () => _mongoose.default.connect(connectionString, {
-  useUnifiedTopology: true
-});
+const connectToMongo = () => _mongoose.default.connect(connectionString);
 
 var _default = connectToMongo;
 exports.default = _default;

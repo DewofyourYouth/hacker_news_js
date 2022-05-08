@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Post = void 0;
-exports.createPost = createPost;
-exports.deletePost = deletePost;
 exports.getPosts = getPosts;
 
 var _mongoose = _interopRequireDefault(require("mongoose"));
@@ -26,16 +24,4 @@ exports.Post = Post;
 
 async function getPosts() {
   return await Post.find();
-}
-
-async function createPost(content) {
-  const post = await Post.create({
-    content
-  });
-  return post;
-}
-
-async function deletePost(postId) {
-  const post = await Post.findByIdAndDelete(postId);
-  return post;
 }
