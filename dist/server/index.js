@@ -4,11 +4,15 @@ var _Post = require("../db/Post.js");
 
 var _index = _interopRequireDefault(require("../db/index.js"));
 
+var _dotenv = _interopRequireDefault(require("dotenv"));
+
 var _express = _interopRequireDefault(require("express"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const port = 3000;
+_dotenv.default.config();
+
+const port = process.env.PORT;
 const app = (0, _express.default)();
 (0, _index.default)();
 app.use(_express.default.json());
